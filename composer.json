@@ -4,5 +4,8 @@
 	"license": "GPL3",
 	"autoload": {
 		"psr-4": { "infrajs\\layer\\autosave\\": "/" }
+	},
+	"require":{
+		"infrajs/session":"~1"
 	}
 }
