@@ -10,9 +10,9 @@
 
 (function(){
 
-	var autosave={
+	var Autosave={
 		getInps:function(div){
-			return $('#'+div).find('select, [type=search], [type=number], [type=tel], [type=email], [type=password], [type=text], [type=radio], [type=checkbox], textarea').filter('[autosave!=0]').filter('[name!=""]');
+			return $('#'+div).find('select, .autosaveblock, [type=search], [type=number], [type=tel], [type=email], [type=password], [type=text], [type=radio], [type=checkbox], textarea').filter('[autosave!=0]').filter('[name!=""]');
 		},
 		/**
 		* слой у которого нужно очистить весь autosave, например после отправки формы на сервер, нужно сбросить сохранённые в инпутах данные
@@ -81,8 +81,12 @@
 				var val=inp.is(':checked');
 			}else if(inp.is('select')){
 				var val=inp.find('option:selected').val();
+			} else if (inp.hasClass('autosaveblock')) {
+				//console.error('AUTOSAVE: Нельзя считывать значение из .autosaveblock');
+				//val = 'autosaveblock error';
+				val = $(inp).text();
 			}else{
-				var val=inp.val();
+				var val = inp.val();
 			}
 			return val;
 		},
@@ -104,6 +108,8 @@
 					inp.find('option').removeAttr('selected');
 				}
 				sel.attr('selected','selected');
+			} else if (inp.hasClass('autosaveblock')) {
+				inp.text(valsave);
 			}else{
 				inp.val(valsave);
 			}
@@ -128,7 +134,7 @@
 		  }
 		}
 	};
-
+	autosave = Autosave;
 	/*controller
 git commit -m "js"
 git push
