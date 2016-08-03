@@ -10,7 +10,7 @@
 
 (function(){
 
-	var Autosave={
+	window.Autosave={
 		getInps:function(div){
 			return $('#'+div).find('select, .autosaveblock, [type=search], [type=number], [type=tel], [type=email], [type=password], [type=text], [type=radio], [type=checkbox], textarea').filter('[autosave!=0]').filter('[name!=""]');
 		},
