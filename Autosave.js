@@ -11,29 +11,29 @@
 (function(){
 
 	window.Autosave={
-		getInps:function(div){
+		getInps: function (div){
 			return $('#'+div).find('select, .autosaveblock, [type=search], [type=number], [type=tel], [type=email], [type=password], [type=text], [type=radio], [type=checkbox], textarea').filter('[autosave!=0]').filter('[name!=""]');
 		},
 		/**
 		* слой у которого нужно очистить весь autosave, например после отправки формы на сервер, нужно сбросить сохранённые в инпутах данные
 		* exc массив свойств которые очищать не нужно и нужно сохранить.. 
 		*/
-		clear:function(layer){//Если autosave у двух слоёв одинаковый нельзя нарушать связь
+		clear: function (layer){//Если autosave у двух слоёв одинаковый нельзя нарушать связь
 			if(!layer.autosavename)return;
 			//layer.autosave={};
 			infra.session.set(layer.autosavename);
 		},
-		get:function(layer,name,def){//blinds
-			if(!layer.autosavename)return def;
-			if(!name)name='';
-			var val=infra.session.get(layer.autosavename+'.'+name,def);
+		get: function (layer, name, def) { //blinds
+			if (!layer.autosavename) return def;
+			if (!name) name = '';
+			var val = Session.get(layer.autosavename+'.'+name, def);
 			return val;
 		},
-		logout:function(){//нет возможности востановить значения по умолчанию указанные в слоях.
+		logout: function (){//нет возможности востановить значения по умолчанию указанные в слоях.
 			infra.session.logout();
 			location.href=location.href;//Чтобы сбросить autosave в слоях
 		},
-		set:function(layer,name,val){//skoroskidka, rte.layer.js
+		set: function (layer,name,val){//skoroskidka, rte.layer.js
 			if(!layer.autosavename)return;
 			infra.session.set(layer.autosavename+'.'+name,val);
 
@@ -41,7 +41,7 @@
 			//layer.autosave=infra.seq.set(layer.autosave,right,val);
 		},
 		//-----------
-		loadAll:function(layer){
+		loadAll: function (layer){
 			var inps=autosave.getInps(layer.div).filter('[autosave]');
 			inps.each(function(){
 				var inp=$(this);
@@ -56,7 +56,7 @@
 			});
 			
 		},
-		saveAll:function(layer){
+		saveAll: function (layer){
 			if(!layer.autosavename)return;
 			var inps=autosave.getInps(layer.div).filter('[autosave]');
 
@@ -73,7 +73,7 @@
 				autosave.set(layer,name,val);
 			});
 		},
-		getVal:function(inp){
+		getVal: function (inp){
 			inp=$(inp);
 			if(inp.attr('type')=='checkbox'){
 				var val=inp.is(':checked');
@@ -90,7 +90,7 @@
 			}
 			return val;
 		},
-		setVal:function(inp,valsave){
+		setVal: function (inp,valsave){
 			inp=$(inp);
 			if(inp.attr('type')=='checkbox'){
 				inp.attr('checked',valsave);
@@ -114,14 +114,14 @@
 				inp.val(valsave);
 			}
 		},
-		bracket:function(inp,is){
+		bracket: function (inp,is){
 			if(!is){
 				$(inp).prevAll('.autosavebreak:first').css('display','none');
 			}else{
 				$(inp).prevAll('.autosavebreak:first').css('display','');
 			}
 		},
-		fireEvent:function(element,event){
+		fireEvent: function (element,event){
 		  if (document.createEventObject) {
 			// dispatch for IE
 			var evt = document.createEventObject();
