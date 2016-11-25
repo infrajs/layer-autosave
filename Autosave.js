@@ -21,7 +21,7 @@
 		clear: function (layer){//Если autosave у двух слоёв одинаковый нельзя нарушать связь
 			if(!layer.autosavename)return;
 			//layer.autosave={};
-			infra.session.set(layer.autosavename);
+			Session.set(layer.autosavename);
 		},
 		get: function (layer, name, def) { //blinds
 			if (!layer.autosavename) return def;
@@ -30,35 +30,35 @@
 			return val;
 		},
 		logout: function (){//нет возможности востановить значения по умолчанию указанные в слоях.
-			infra.session.logout();
+			Session.logout();
 			location.href=location.href;//Чтобы сбросить autosave в слоях
 		},
 		set: function (layer,name,val){//skoroskidka, rte.layer.js
 			if(!layer.autosavename)return;
-			infra.session.set(layer.autosavename+'.'+name,val);
+			Session.set(layer.autosavename+'.'+name,val);
 
 			//var right=infra.seq.right(name);
 			//layer.autosave=infra.seq.set(layer.autosave,right,val);
 		},
 		//-----------
 		loadAll: function (layer){
-			var inps=autosave.getInps(layer.div).filter('[autosave]');
-			inps.each(function(){
+			var inps = Autosave.getInps(layer.div).filter('[autosave]');
+			inps.each( function () {
 				var inp=$(this);
 				var name=inp.attr('name');
 				var val=autosave.getVal(inp);
 				var valsave=autosave.get(layer,name);
-				if(valsave!==undefined){
+				/*if (valsave!==undefined) { //Значения по умолчанию подставляемые браузером
 					autosave.setVal(inp,valsave);
 					autosave.bracket(inp,true);
 					inp.change();
-				}
+				}*/
 			});
 			
 		},
 		saveAll: function (layer){
 			if(!layer.autosavename)return;
-			var inps=autosave.getInps(layer.div).filter('[autosave]');
+			var inps=Autosave.getInps(layer.div).filter('[autosave]');
 
 			inps.each(function(){
 				var inp=$(this);
@@ -162,16 +162,17 @@ cd ../.autosaveRestore=function(layer){
 		}
 	}*/
 	infrajs.autosaveHand=function(layer){
-		if(layer.autosavenametpl)layer.autosavename=infra.template.parse([layer.autosavenametpl],layer);
-		if(!layer.autosavename)return;
-		var inps=autosave.getInps(layer.div).not('[autosave]').attr('autosave',1);//Берём input тольо не обработанные
-		inps.each(function(){
+		if (layer.autosavenametpl) layer.autosavename = Template.parse([layer.autosavenametpl], layer);
+		if (!layer.autosavename) return;
+		var inps = Autosave.getInps(layer.div).not('[autosave]').attr('autosave',1);//Берём input тольо не обработанные
+		
+		inps.each( function () {
 			var inp=this;
 			var html='<div class="autosavebreak" title="Отменить изменения" style="display:none; position:absolute; width:9px; height:3px; cursor:pointer; background-color:gray;"onmouseout="this.style.backgroundColor=\'gray\'" onmouseover="this.style.backgroundColor=\'red\'"></div>';
-			if(inp.getAttribute('autosavebreak')){
+			if (inp.getAttribute('autosavebreak')) {
 				inp.removeAttribute('autosavebreak');
 				$(inp).before(html);
-				var def=autosave.getVal(inp);
+				var def = autosave.getVal(inp);
 				$(inp).prevAll('.autosavebreak:first').click(function(){
 					autosave.setVal(inp,def);
 					//$(inp).change();//Применится для визуального редактора
@@ -184,7 +185,6 @@ cd ../.autosaveRestore=function(layer){
 		//Функция сохраняет все значение, а не только того элемента на ком она сработала
 
 		autosave.loadAll(layer);//Востанавливаем то что есть в autosave, При установки нового занчения срабатывает change
-
 		//change может программно вызываться у множества элементов. это приводит к тормозам.. нужно объединять
 		inps.change(function(){//Всё на change.. при авто изменении нужно вызывать событие change
 			//autosave.saveAll(layer);
@@ -227,6 +227,6 @@ cd ../.autosaveRestore=function(layer){
 	
 
 	//infra.seq.set(infra.template.scope,['autosave','get'],autosave.get);
-	//infra.seq.set(infra.template.scope,['infra','session','get'],infra.session.get);
+	//infra.seq.set(infra.template.scope,['infra','session','get'],Session.get);
 	
 })();
