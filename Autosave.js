@@ -196,7 +196,6 @@ cd ../.autosaveRestore=function(layer){
 			//var nowval=autosave.get(layer,name);
 			//if(!nowval)nowval='';
 			//if(val===nowval)return;
-			
 			autosave.bracket(inp,true);
 			autosave.set(layer,name,val);
 		});//Подписались на события inputов onchange
