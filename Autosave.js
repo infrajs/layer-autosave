@@ -48,11 +48,11 @@
 				var name=inp.attr('name');
 				var val=autosave.getVal(inp);
 				var valsave=autosave.get(layer,name);
-				/*if (valsave!==undefined) { //Значения по умолчанию подставляемые браузером
+				if (valsave!==undefined) { //Значения по умолчанию подставляемые браузером
 					autosave.setVal(inp,valsave);
 					autosave.bracket(inp,true);
 					inp.change();
-				}*/
+				}
 			});
 			
 		},
