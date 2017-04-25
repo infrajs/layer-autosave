@@ -208,7 +208,7 @@ cd ../.autosaveRestore=function(layer){
 	* При скрытии слоя сохраняем изменения в его полях 
 	* 
 	*/
-	/* infra.listen(infra,'layer.onhide',function(){//rte.layer.js сохраняется autosave в onhide - подставляетяс texarea после редактора
+	/* infra.listen(infra,'Layer.onhide',function(){//rte.layer.js сохраняется autosave в onhide - подставляетяс texarea после редактора
 		var layer=this;
 		if(!layer.autosavename)return;
 		if(layer.autosaveonhide===false)return;
