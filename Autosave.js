@@ -100,6 +100,7 @@
 					inp.attr('checked',true);
 				}
 			}else if(inp.is('select')){
+				//Для работы нужно явно указывать у option атрибут value
 				var sel=inp.find('option[value="'+valsave+'"]');
 				if(!sel.length){
 					sel=inp.find('option:contains("'+valsave+'")');
