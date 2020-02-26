@@ -3,7 +3,12 @@ Event.handler('Layer.onshow', function (layer) {
 	//autosave
 	Controller.autosaveHand(layer);
 }, 'autosave:dom');
-Event.one('Controller.oninit',function(){
+Event.one('Controller.oninit',async () => {
+	
+	let Load = (await import('/vendor/akiyatkin/load/Load.js')).default
+	let CDN = await Load.on('import-default', '/vendor/akiyatkin/load/CDN.js')
+	await CDN.js('jquery')
+
 	Controller.externalAdd('autosave', function(now, ext, layer, external) {
 		if (external.inheritance) {
 			now=ext;//Если есть метка о наследовании, то просто сохраняем указатель
