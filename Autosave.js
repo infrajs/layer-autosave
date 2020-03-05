@@ -135,7 +135,7 @@
 		  }
 		}
 	};
-	autosave = Autosave;
+	let autosave = Autosave;
 	/*controller
 git commit -m "js"
 git push
@@ -223,7 +223,7 @@ cd ../.autosaveRestore=function(layer){
 		
 
 
-	infrajs.autosave=autosave;//Это нужно из за метода clear который может вызываться кем угодно. и localSave
+	infrajs.autosave=Autosave;//Это нужно из за метода clear который может вызываться кем угодно. и localSave
 	
 
 	//infra.seq.set(infra.template.scope,['autosave','get'],autosave.get);
