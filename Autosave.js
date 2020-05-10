@@ -55,8 +55,9 @@ let Autosave = {
 		});
 
 	},
-	saveAll: function (layer) {
+	saveAll: async function (layer) {
 		if (!layer.autosavename) return;
+		await CDN.load('jquery')
 		var inps = Autosave.getInps(layer.div).filter('[autosave]');
 
 		inps.each(function () {
@@ -136,9 +137,10 @@ let Autosave = {
 };
 let autosave = Autosave;
 
-Controller.autosaveHand = function (layer) {
+Controller.autosaveHand = async function (layer) {
 	if (layer.autosavenametpl) layer.autosavename = Template.parse([layer.autosavenametpl], layer);
 	if (!layer.autosavename) return;
+	await CDN.load('jquery')
 	var inps = Autosave.getInps(layer.div).not('[autosave]').attr('autosave', 1);//Берём input тольо не обработанные
 
 	inps.each(function () {
